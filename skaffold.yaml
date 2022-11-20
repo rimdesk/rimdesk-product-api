@@ -1,0 +1,19 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: product-api
+build:
+  artifacts:
+    - image: rimdesk/product-api
+      docker:
+        dockerfile: dockerfile
+manifests:
+  kustomize:
+    paths:
+      - manifest/base
+profiles:
+  - name: minikube
+    manifests:
+      kustomize:
+        paths:
+          - manifest/minikube
