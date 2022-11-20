@@ -13,6 +13,7 @@ type Dto struct {
 	Description string  `json:"description"`
 	Amount      float32 `json:"amount"`
 	UnitPrice   float32 `json:"unitPrice"`
+	RetailPrice float32 `json:"retailPrice"`
 }
 
 func (d *Dto) ToEntity() entities.Product {
@@ -25,6 +26,7 @@ func (d *Dto) ToEntity() entities.Product {
 		Description: d.Description,
 		Amount:      d.Amount,
 		UnitPrice:   d.UnitPrice,
+		RetailPrice: d.RetailPrice,
 	}
 }
 
@@ -34,6 +36,7 @@ func (d *Dto) CopyToEntity(product *entities.Product) {
 	product.Type = d.Type
 	product.Barcode = d.Barcode
 	product.UnitPrice = d.UnitPrice
+	product.RetailPrice = d.RetailPrice
 	product.Amount = d.Amount
 	product.Description = d.Description
 	product.CategoryID = d.CategoryID

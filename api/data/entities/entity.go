@@ -15,6 +15,7 @@ type Product struct {
 	Description string
 	Amount      float32
 	UnitPrice   float32
+	RetailPrice float32
 }
 
 func (p *Product) ToDomain() domains.ProductDomain {
@@ -27,6 +28,7 @@ func (p *Product) ToDomain() domains.ProductDomain {
 		Description: p.Description,
 		Amount:      p.Amount,
 		UnitPrice:   p.UnitPrice,
+		RetailPrice: p.RetailPrice,
 		CreatedAt:   &p.CreatedAt,
 	}
 }

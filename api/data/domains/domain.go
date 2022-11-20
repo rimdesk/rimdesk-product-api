@@ -11,5 +11,6 @@ type ProductDomain struct {
 	Description string     `json:"description"`
 	Amount      float32    `json:"amount"`
 	UnitPrice   float32    `json:"unitPrice"`
+	RetailPrice float32    `json:"retailPrice"`
 	CreatedAt   *time.Time `json:"createdAt"`
 }
