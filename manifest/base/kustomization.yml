@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - service.yml
   - deployment.yml
+  - virtual-service.yml
+  - configmap.yml

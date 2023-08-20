@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: product-api
-          image: rimdesk/product-api:latest
-          imagePullPolicy: Never
+          image: 004237575886.dkr.ecr.us-east-1.amazonaws.com/rimdesk/product-api:latest
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: product-api

@@ -12,8 +12,13 @@ manifests:
     paths:
       - manifest/base
 profiles:
-  - name: minikube
+  - name: prod
+    build:
+      artifacts:
+        - image: 004237575886.dkr.ecr.us-east-1.amazonaws.com/rimdesk/product-api
+          docker:
+            dockerfile: dockerfile
     manifests:
       kustomize:
         paths:
-          - manifest/minikube
+          - manifest/overlays/prod

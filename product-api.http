@@ -1,11 +1,11 @@
-GET http://localhost:3000/v1/products
+GET http://localhost:8080/v1/products
 
 ###
-GET http://localhost:3000/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
+GET http://localhost:8080/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
 
 
 ###
-POST http://localhost:3000/v1/products
+POST http://localhost:8080/v1/products
 Accept: application/json
 Content-Type: application/json
 
@@ -15,12 +15,13 @@ Content-Type: application/json
   "category_id": "920909ee-745b-4cc7-a62f-9abf005633c4",
   "barcode": "1234567890",
   "description": "Description of item goes here",
-  "unitPrice": 8000,
+  "supply_price": 8000,
+  "retail_price": 8000,
   "amount": 8000
 }
 
 ###
-PATCH http://localhost:3000/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
+PATCH http://localhost:8080/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
 Accept: application/json
 Content-Type: application/json
 
@@ -30,9 +31,10 @@ Content-Type: application/json
   "category_id": "920909ee-745b-4cc7-a62f-9abf005633c4",
   "barcode": "1234567890",
   "description": "Description of item goes here",
-  "unitPrice": 6000,
+  "supply_price": 6000,
+  "retail_price": 6000,
   "amount": 6000
 }
 
 ###
-DELETE http://localhost:3000/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
+DELETE http://localhost:8080/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90

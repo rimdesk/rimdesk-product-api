@@ -23,8 +23,8 @@ RUN go mod download && go mod verify
 # Copy the source from the current directory to the working directory inside the container.
 COPY . .
 
-# Build the Go app
-RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main ./
+# Build the Go api
+RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main cmd/api/*.go
 
 # Start a new stage from scratch
 FROM alpine:latest
@@ -37,7 +37,7 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/.env.docker ./.env
 
 # Expose port to the outside world
-EXPOSE 4000
+EXPOSE 8080
 
 # Command to run the executable
 CMD ["./main"]

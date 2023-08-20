@@ -6,8 +6,7 @@ spec:
   selector:
     app: product-api
   ports:
-    - port: 3000
-      targetPort: 3000
+    - port: 8080
+      targetPort: 8080
       name: http
-      protocol: TCP
   type: ClusterIP

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="rimdesk_product_db.db" uuid="e9734357-8b9a-4dc4-90c6-0b4383267e50">
-      <driver-ref>sqlite.xerial</driver-ref>
+    <data-source source="LOCAL" name="job driver - rimdesk_products_db.db" uuid="458f31c8-52a9-4819-8e11-3cc162afafa9">
+      <driver-ref>a3faba43-5c0f-491a-bc36-bc2ff5412cff</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/rimdesk_product_db.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/rimdesk_products_db.db</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
