@@ -3,8 +3,8 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/rimdesk/product-api/internal/controllers"
-	"github.com/rimdesk/product-api/internal/security"
+	"github.com/rimdesk/product-api/pkg/controllers"
+	"github.com/rimdesk/product-api/pkg/security"
 )
 
 type AppRouter interface {

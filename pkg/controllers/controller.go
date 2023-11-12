@@ -4,12 +4,9 @@ import (
 	"fmt"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
-	"github.com/rimdesk/product-api/internal/common"
-	"github.com/rimdesk/product-api/internal/data/domains"
-	"github.com/rimdesk/product-api/internal/data/dtos"
-	"github.com/rimdesk/product-api/internal/service"
-	"log"
-	"time"
+	"github.com/rimdesk/product-api/pkg/common"
+	"github.com/rimdesk/product-api/pkg/data/dtos"
+	"github.com/rimdesk/product-api/pkg/service"
 )
 
 type ProductController interface {
@@ -31,26 +28,19 @@ func NewProductController(productService service.ProductService, validate *valid
 }
 
 func (controller *productController) List(ctx *fiber.Ctx) error {
-	apiResponse := common.ApiResponse[[]*domains.ProductDomain]{
-		Success:   true,
-		Timestamp: time.Now().UnixMilli(),
-		Message:   "Products fetched successfully",
-		Code:      fiber.StatusOK,
-	}
+	apiResponse := common.NewApiResponse()
+	companyID := ctx.GetReqHeaders()["X-Company-Id"]
 
-	apiResponse.Data = controller.productService.GetAllProducts(ctx)
+	apiResponse.Data, _ = controller.productService.GetAllProducts(ctx, companyID)
 
 	return ctx.Status(fiber.StatusOK).JSON(apiResponse)
 }
 
 func (controller *productController) Get(ctx *fiber.Ctx) error {
-	apiResponse := common.ApiResponse[*domains.ProductDomain]{
-		Success:   true,
-		Timestamp: time.Now().UnixMilli(),
-		Code:      fiber.StatusOK,
-	}
+	apiResponse := common.NewApiResponse()
+	companyID := ctx.GetReqHeaders()["X-Company-Id"]
 
-	productDomain, err := controller.productService.GetProductById(ctx, ctx.Params("id"))
+	productDomain, err := controller.productService.GetProductByCompanyAndId(ctx, companyID, ctx.Params("id"))
 	if err != nil {
 		apiResponse.Success = false
 		apiResponse.Errors = []string{err.Error()}
@@ -66,13 +56,8 @@ func (controller *productController) Get(ctx *fiber.Ctx) error {
 }
 
 func (controller *productController) Post(ctx *fiber.Ctx) error {
-	apiResponse := common.ApiResponse[*domains.ProductDomain]{
-		Success:   true,
-		Timestamp: time.Now().UnixMilli(),
-		Code:      fiber.StatusCreated,
-	}
-
-	log.Println("Creating product from dto:", string(ctx.Body()))
+	apiResponse := common.NewApiResponse()
+	companyID := ctx.GetReqHeaders()["X-Company-Id"]
 
 	dto := new(dtos.ProductDto)
 	if err := ctx.BodyParser(dto); err != nil {
@@ -91,7 +76,7 @@ func (controller *productController) Post(ctx *fiber.Ctx) error {
 		return ctx.Status(fiber.StatusBadRequest).JSON(apiResponse)
 	}
 
-	productDomain, err := controller.productService.CreateProduct(ctx, dto)
+	productDomain, err := controller.productService.CreateProduct(ctx, companyID, dto)
 	if err != nil {
 		apiResponse.Success = false
 		apiResponse.Errors = []string{err.Error()}
@@ -102,16 +87,14 @@ func (controller *productController) Post(ctx *fiber.Ctx) error {
 
 	apiResponse.Data = productDomain
 	apiResponse.Message = "Product created successfully"
+	apiResponse.Code = fiber.StatusCreated
 
 	return ctx.Status(fiber.StatusCreated).JSON(apiResponse)
 }
 
 func (controller *productController) Patch(ctx *fiber.Ctx) error {
-	apiResponse := common.ApiResponse[*domains.ProductDomain]{
-		Success:   true,
-		Timestamp: time.Now().UnixMilli(),
-		Code:      fiber.StatusOK,
-	}
+	apiResponse := common.NewApiResponse()
+	companyID := ctx.GetReqHeaders()["X-Company-Id"]
 
 	dto := new(dtos.ProductDto)
 	if err := ctx.BodyParser(dto); err != nil {
@@ -130,7 +113,7 @@ func (controller *productController) Patch(ctx *fiber.Ctx) error {
 		return ctx.Status(fiber.StatusBadRequest).JSON(apiResponse)
 	}
 
-	productDomain, err := controller.productService.UpdateProduct(ctx, ctx.Params("id"), dto)
+	productDomain, err := controller.productService.UpdateProduct(ctx, companyID, ctx.Params("id"), dto)
 	if err != nil {
 		apiResponse.Success = false
 		apiResponse.Errors = []string{err.Error()}
@@ -146,13 +129,10 @@ func (controller *productController) Patch(ctx *fiber.Ctx) error {
 }
 
 func (controller *productController) Delete(ctx *fiber.Ctx) error {
-	apiResponse := common.ApiResponse[*domains.ProductDomain]{
-		Success:   true,
-		Timestamp: time.Now().UnixMilli(),
-		Code:      fiber.StatusOK,
-	}
+	apiResponse := common.NewApiResponse()
+	companyID := ctx.GetReqHeaders()["X-Company-Id"]
 
-	err := controller.productService.DeleteProduct(ctx, ctx.Params("id"))
+	err := controller.productService.DeleteProduct(ctx, companyID, ctx.Params("id"))
 	if err != nil {
 		apiResponse.Success = false
 		apiResponse.Errors = []string{err.Error()}
@@ -167,7 +147,8 @@ func (controller *productController) Delete(ctx *fiber.Ctx) error {
 }
 
 func (controller *productController) Search(ctx *fiber.Ctx) error {
-	apiResponse := common.ApiResponse[[]domains.ProductDomain]{}
+	apiResponse := common.NewApiResponse()
+	companyID := ctx.GetReqHeaders()["X-Company-Id"]
 
 	dto := new(dtos.ProductSearchDto)
 	if err := ctx.QueryParser(dto); err != nil {
@@ -186,7 +167,7 @@ func (controller *productController) Search(ctx *fiber.Ctx) error {
 		return ctx.Status(fiber.StatusBadRequest).JSON(apiResponse)
 	}
 
-	productDomains, err := controller.productService.SearchWarehouse(ctx, dto)
+	productDomains, err := controller.productService.SearchWarehouse(ctx, companyID, dto)
 	if err != nil {
 		apiResponse.Success = false
 		apiResponse.Errors = []string{err.Error()}

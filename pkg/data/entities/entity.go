@@ -3,7 +3,7 @@ package entities
 import (
 	"github.com/google/uuid"
 	"github.com/jinzhu/copier"
-	"github.com/rimdesk/product-api/internal/data/domains"
+	"github.com/rimdesk/product-api/pkg/data/domains"
 	"gorm.io/gorm"
 	"log"
 )

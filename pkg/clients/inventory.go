@@ -3,8 +3,10 @@ package clients
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/rimdesk/product-api/internal/common"
-	"github.com/rimdesk/product-api/internal/data/domains"
+	"github.com/gofiber/fiber/v2"
+	"github.com/rimdesk/product-api/pkg/common"
+	"github.com/rimdesk/product-api/pkg/data/domains"
+	"github.com/rimdesk/product-api/pkg/security"
 	"net/http"
 )
 
@@ -13,24 +15,26 @@ const (
 	InventoryEndpoint = "inventory"
 )
 
-type InventoryClient struct {
-	Client *http.Client
+type InventoryClient interface {
+	GetById(ctx *fiber.Ctx, ID string) (*domains.InventoryDomain, error)
 }
 
-func NewInventoryClient() *InventoryClient {
-	return &InventoryClient{
-		Client: &http.Client{},
+type inventoryClient struct {
+	http *http.Client
+}
+
+func NewInventoryClient() InventoryClient {
+	return &inventoryClient{
+		http: http.DefaultClient,
 	}
 }
 
-func (c *InventoryClient) GetById(ID string) (*domains.InventoryDomain, error) {
+func (client *inventoryClient) GetById(ctx *fiber.Ctx, ID string) (*domains.InventoryDomain, error) {
 	url := fmt.Sprintf("%s/%s/%s", InventoryBaseUrl, InventoryEndpoint, ID)
 	req, _ := http.NewRequest("GET", url, nil)
-	reqHeader := http.Header{}
-	reqHeader.Set("Authorization", "Bearer token-goes-here")
-	req.Header = reqHeader
+	req.Header.Set("Authorization", security.GetAccessToken(ctx))
 
-	response, err := c.Client.Do(req)
+	response, err := client.http.Do(req)
 	if err != nil {
 		return nil, err
 	}

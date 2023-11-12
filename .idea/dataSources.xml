@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="job driver - rimdesk_products_db.db" uuid="458f31c8-52a9-4819-8e11-3cc162afafa9">
-      <driver-ref>a3faba43-5c0f-491a-bc36-bc2ff5412cff</driver-ref>
+      <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/rimdesk_products_db.db</jdbc-url>

@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/rimdesk/product-api/internal/common"
-	"github.com/rimdesk/product-api/internal/data/domains"
-	"github.com/rimdesk/product-api/internal/security"
+	"github.com/rimdesk/product-api/pkg/common"
+	"github.com/rimdesk/product-api/pkg/data/domains"
+	"github.com/rimdesk/product-api/pkg/security"
 	"net/http"
 )
 
@@ -20,23 +20,25 @@ type WarehouseClient interface {
 }
 
 type warehouseClient struct {
-	Client *http.Client
+	http *http.Client
 }
 
 func NewWarehouseClient() WarehouseClient {
 	return &warehouseClient{
-		Client: http.DefaultClient,
+		http: http.DefaultClient,
 	}
 }
 
 func (warehouse *warehouseClient) GetById(ctx *fiber.Ctx, ID string) (*domains.WarehouseDomain, error) {
 	url := fmt.Sprintf("%s/%s/%s", WarehouseURL, WarehouseEndpoint, ID)
-	req, _ := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
 
-	accessToken := security.GetAccessToken(ctx)
-	req.Header.Set("Authorization", accessToken)
+	req.Header.Set("Authorization", security.GetAccessToken(ctx))
 
-	response, err := warehouse.Client.Do(req)
+	response, err := warehouse.http.Do(req)
 	if err != nil {
 		return nil, err
 	}

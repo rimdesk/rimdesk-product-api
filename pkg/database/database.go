@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"github.com/rimdesk/product-api/internal/data/entities"
+	"github.com/rimdesk/product-api/pkg/data/entities"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"

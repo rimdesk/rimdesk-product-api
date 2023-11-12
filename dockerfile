@@ -24,7 +24,7 @@ RUN go mod download && go mod verify
 COPY . .
 
 # Build the Go api
-RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main cmd/api/*.go
+RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main cmd/*.go
 
 # Start a new stage from scratch
 FROM alpine:latest

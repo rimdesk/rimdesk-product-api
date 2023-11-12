@@ -1,13 +1,16 @@
 GET http://localhost:8080/v1/products
+X-Company-Id: 964aa77a-c71e-4585-a030-80fbea2f6353
 
 ###
 GET http://localhost:8080/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
+X-Company-Id: 964aa77a-c71e-4585-a030-80fbea2f6353
 
 
 ###
 POST http://localhost:8080/v1/products
 Accept: application/json
 Content-Type: application/json
+X-Company-Id: 964aa77a-c71e-4585-a030-80fbea2f6353
 
 {
   "name": "iPhone 14 Plus",
@@ -24,6 +27,7 @@ Content-Type: application/json
 PATCH http://localhost:8080/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
 Accept: application/json
 Content-Type: application/json
+X-Company-Id: 964aa77a-c71e-4585-a030-80fbea2f6353
 
 {
   "name": "iPhone 14 Pro",
@@ -38,3 +42,4 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:8080/v1/products/e7dd559c-9951-4663-bb3e-f153c2f76a90
+X-Company-Id: 964aa77a-c71e-4585-a030-80fbea2f6353
